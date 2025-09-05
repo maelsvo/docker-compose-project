@@ -1,0 +1,37 @@
+# macOS system files
+.DS_Store
+
+# iCloud files
+*.icloud
+
+# Docker files
+*.log
+*.pid
+docker-compose.override.yml
+
+# Python cache (if using Python)
+__pycache__/
+*.pyc
+
+# Node.js (if using Node)
+node_modules/
+
+# VSCode settings
+.vscode/
+
+# Environment files
+.env
+.env.*
+
+# Backup files
+*~
+*.swp
+*.bak
+
+# Ignore local configuration
+*.local
+
+# Ignore build artifacts
+dist/
+build/
+out/
