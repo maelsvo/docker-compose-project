@@ -1,0 +1,9 @@
+name: exercice-1-compose # Add this at the top level
+services:
+    debian:
+        build: ./image
+        ports:
+            - "8000:8000"
+        volumes:
+            - .:/app
+        restart: unless-stopped
