@@ -1,0 +1,20 @@
+name: exercice3
+services:
+    postgresdb:
+        image: postgres:latest
+#        ports:
+#            - "127.0.0.1:8080:5432"        personal test to connect to db on dbeaver
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        environment:
+            POSTGRES_PASSWORD_FILE: /run/secrets/dbpassword
+        env_file: ".env"
+        secrets:
+            - dbpassword
+
+volumes:
+    postgres_data:
+
+secrets:
+    dbpassword:
+        file: ./db_password.txt

@@ -1,0 +1,8 @@
+name: exercice2
+services:
+    node:
+        build: ./image
+        ports:
+            - "127.0.0.1:3030:3030"
+        volumes:
+            - ./image:/app
