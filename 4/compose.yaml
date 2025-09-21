@@ -1,0 +1,38 @@
+name: exercice4
+services:
+#    Postgresql database
+    postgresdb:
+        image: postgres:latest
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        environment:
+            POSTGRES_PASSWORD_FILE: /run/secrets/dbpassword
+        env_file: ".env"
+        secrets:
+            - dbpassword
+        healthcheck:
+            test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
+            interval: 10s
+            retries: 5
+            start_period: 30s
+            timeout: 10s
+#    Debian client to connect to db
+    debian_psql_client:
+        build: ./debian_psql
+        environment:
+            PGPASSWORD_FILE: /run/secrets/dbpassword
+        env_file: ".env"
+        secrets:
+            - dbpassword
+        depends_on:
+            postgresdb:
+                condition: service_healthy
+                restart: true
+        command: ["sh", "-c", "export PGPASSWORD=$(cat /run/secrets/dbpassword) && psql -c 'SELECT version();'"]
+
+volumes:
+    postgres_data:
+
+secrets:
+    dbpassword:
+        file: ./db_password.txt
